@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
+import Groq from 'groq-sdk';
 import { verifyAuth } from '@/lib/auth';
 
-function getOpenAI() {
-  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+function getGroq() {
+  return new Groq({ apiKey: process.env.GROQ_API_KEY });
 }
 
 function buildCyclingPrompt(destination: string, days: number): string {
@@ -120,13 +120,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'חסרים פרמטרים' }, { status: 400 });
     }
 
+    if (!process.env.GROQ_API_KEY) {
+      return NextResponse.json(
+        { message: 'מפתח Groq API לא הוגדר - הוסף GROQ_API_KEY ל-.env.local' },
+        { status: 500 }
+      );
+    }
+
     const prompt =
       tripType === 'cycling'
         ? buildCyclingPrompt(destination, durationDays)
         : buildTrekkingPrompt(destination, durationDays);
 
-    const completion = await getOpenAI().chat.completions.create({
-      model: 'gpt-4o-mini',
+    const completion = await getGroq().chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.7,
       max_tokens: 3000,

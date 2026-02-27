@@ -38,16 +38,16 @@
 | Backend Auth | Express.js, JWT, bcrypt |
 | Database | MongoDB + Mongoose |
 | Maps | Leaflet.js, OpenRouteService |
-| AI/LLM | OpenAI GPT-4o-mini |
+| AI/LLM | Groq (Llama 3.3 70B) - חינמי |
 | Weather | OpenWeatherMap API |
-| Images | DALL-E 3 / Unsplash |
+| Images | Unsplash API / Picsum |
 
 ## דרישות מוקדמות
 
 - **Node.js** 18+ 
 - **MongoDB** (מקומי או MongoDB Atlas)
 - **מפתחות API**:
-  - OpenAI API Key (ליצירת מסלולים + תמונות)
+  - Groq API Key (ליצירת מסלולים - חינמי)
   - OpenWeatherMap API Key (תחזית מזג אוויר)
   - OpenRouteService API Key (ניתוב על מפות)
 
@@ -94,7 +94,8 @@ CLIENT_URL=http://localhost:3000
 NEXT_PUBLIC_EXPRESS_URL=http://localhost:4000
 MONGODB_URI=mongodb://localhost:27017/travel-routes
 JWT_SECRET=your-secret-key-here  # (same as Express!)
-OPENAI_API_KEY=sk-...
+GROQ_API_KEY=gsk_...
+UNSPLASH_ACCESS_KEY=...  # optional
 OPENWEATHER_API_KEY=...
 ORS_API_KEY=...
 ```
@@ -121,9 +122,13 @@ npm run dev
 
 ## קבלת מפתחות API
 
-### OpenAI
-1. צור חשבון ב-[platform.openai.com](https://platform.openai.com)
-2. צור API Key ב-Settings → API Keys
+### Groq (חינמי)
+1. צור חשבון ב-[console.groq.com](https://console.groq.com)
+2. צור API Key ב-Keys (ללא כרטיס אשראי)
+
+### Unsplash (אופציונלי - לתמונות)
+1. צור חשבון ב-[unsplash.com/developers](https://unsplash.com/developers)
+2. צור אפליקציה וקבל Access Key
 
 ### OpenWeatherMap
 1. צור חשבון ב-[openweathermap.org](https://openweathermap.org)

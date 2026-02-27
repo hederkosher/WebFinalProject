@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,27 +11,21 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: 'חסר שאילתת חיפוש' }, { status: 400 });
     }
 
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      return NextResponse.json({ url: getFallbackImage(query) });
-    }
-
-    try {
-      const openai = new OpenAI({ apiKey });
-      const response = await openai.images.generate({
-        model: 'dall-e-3',
-        prompt: `A beautiful landscape photograph of ${query}, travel photography, scenic nature view, high quality`,
-        n: 1,
-        size: '1792x1024',
-        quality: 'standard',
-      });
-
-      const url = response.data?.[0]?.url;
-      if (url) {
-        return NextResponse.json({ url });
+    const unsplashKey = process.env.UNSPLASH_ACCESS_KEY;
+    if (unsplashKey) {
+      try {
+        const res = await fetch(
+          `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&orientation=landscape&per_page=1`,
+          { headers: { Authorization: `Client-ID ${unsplashKey}` } }
+        );
+        if (res.ok) {
+          const data = await res.json();
+          const url = data.results?.[0]?.urls?.regular;
+          if (url) return NextResponse.json({ url });
+        }
+      } catch (err) {
+        console.error('Unsplash error:', err);
       }
-    } catch (imgError) {
-      console.error('DALL-E error, using fallback:', imgError);
     }
 
     return NextResponse.json({ url: getFallbackImage(query) });
@@ -43,6 +36,6 @@ export async function GET(request: Request) {
 }
 
 function getFallbackImage(query: string): string {
-  const encoded = encodeURIComponent(query);
-  return `https://source.unsplash.com/1200x600/?${encoded},landscape,travel`;
+  const seed = encodeURIComponent(query).replace(/%/g, '');
+  return `https://picsum.photos/seed/${seed || 'travel'}/1200/600`;
 }

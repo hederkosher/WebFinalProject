@@ -13,7 +13,8 @@
 
 | שירות | שימוש | הרשמה |
 |--------|-------|-------|
-| OpenAI | יצירת מסלולים (LLM) + תמונות (DALL-E) | [platform.openai.com](https://platform.openai.com) |
+| Groq | יצירת מסלולים (LLM) - **חינמי** | [console.groq.com](https://console.groq.com) |
+| Unsplash | תמונות (אופציונלי) | [unsplash.com/developers](https://unsplash.com/developers) (חינמי) |
 | OpenWeatherMap | תחזית מזג אוויר | [openweathermap.org](https://openweathermap.org/api) (חינמי) |
 | OpenRouteService | ניתוב מסלולים על מפה | [openrouteservice.org](https://openrouteservice.org/dev/#/signup) (חינמי, 2000 בקשות/יום) |
 
@@ -76,7 +77,8 @@ CLIENT_URL=http://localhost:3000
 NEXT_PUBLIC_EXPRESS_URL=http://localhost:4000
 MONGODB_URI=mongodb://localhost:27017/travel-routes
 JWT_SECRET=your-secret-key-minimum-32-characters-long
-OPENAI_API_KEY=sk-your-key-here
+GROQ_API_KEY=gsk_your-groq-key-here
+UNSPLASH_ACCESS_KEY=your-unsplash-key-optional
 OPENWEATHER_API_KEY=your-key-here
 ORS_API_KEY=your-key-here
 ```
@@ -155,8 +157,9 @@ npm run dev
 - ודאו ש-MongoDB רץ (`mongod`)
 - ודאו שה-`MONGODB_URI` נכון
 
-### "OPENAI_API_KEY missing"
-- ודאו שהקובץ `nextjs-client/.env.local` קיים ומכיל את המפתח
+### "GROQ_API_KEY missing" / "מפתח Groq API לא הוגדר"
+- ודאו שהקובץ `nextjs-client/.env.local` קיים ומכיל את `GROQ_API_KEY`
+- קבלו מפתח חינמי מ-[console.groq.com](https://console.groq.com/keys)
 - הפעילו מחדש את שרת Next.js לאחר שינוי ב-.env
 
 ### "JWT invalid" / הפניה חוזרת ללוגין

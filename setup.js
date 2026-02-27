@@ -72,7 +72,8 @@ async function main() {
 
   log('\n  הכנס את מפתחות ה-API שלך (Enter לדלג על שדה):\n', 'cyan');
 
-  const openaiKey = await ask('  OpenAI API Key (sk-...): ');
+  const groqKey = await ask('  Groq API Key (gsk_...) [חינמי]: ');
+  const unsplashKey = await ask('  Unsplash Access Key (אופציונלי - לתמונות): ');
   const weatherKey = await ask('  OpenWeatherMap API Key: ');
   const orsKey = await ask('  OpenRouteService API Key: ');
   const mongoUri = await ask('  MongoDB URI (Enter = localhost): ');
@@ -91,7 +92,8 @@ CLIENT_URL=http://localhost:3000
   const nextEnv = `NEXT_PUBLIC_EXPRESS_URL=http://localhost:4000
 MONGODB_URI=${mongo}
 JWT_SECRET=${jwtSecret}
-OPENAI_API_KEY=${openaiKey.trim()}
+GROQ_API_KEY=${groqKey.trim()}
+UNSPLASH_ACCESS_KEY=${unsplashKey.trim()}
 OPENWEATHER_API_KEY=${weatherKey.trim()}
 ORS_API_KEY=${orsKey.trim()}
 `;
