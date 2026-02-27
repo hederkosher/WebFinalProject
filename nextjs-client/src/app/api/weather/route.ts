@@ -2,12 +2,15 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-interface ForecastItem {
-  dt: number;
-  main: { temp_min: number; temp_max: number; humidity: number };
-  weather: { description: string; icon: string }[];
-  wind: { speed: number };
-  dt_txt: string;
+interface WeatherApiForecastDay {
+  date: string;
+  day: {
+    maxtemp_c: number;
+    mintemp_c: number;
+    avghumidity: number;
+    maxwind_kph: number;
+    condition: { text: string; icon: string };
+  };
 }
 
 export async function GET(request: Request) {
@@ -18,70 +21,47 @@ export async function GET(request: Request) {
     const location = searchParams.get('location') || 'Unknown';
 
     if (!lat || !lng) {
-      return NextResponse.json({ message: 'חסרים קואורדינטות' }, { status: 400 });
+      return NextResponse.json({ message: 'Missing coordinates' }, { status: 400 });
     }
 
-    const apiKey = process.env.OPENWEATHER_API_KEY;
+    const apiKey = process.env.WEATHERAPI_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { message: 'מפתח API של מזג אוויר לא הוגדר' },
+        { message: 'Weather API key not configured' },
         { status: 500 }
       );
     }
 
     const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric&lang=he`
+      `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${lng}&days=4&lang=he`
     );
 
     if (!res.ok) {
-      return NextResponse.json({ message: 'שגיאה בשליפת מזג אוויר' }, { status: 500 });
+      return NextResponse.json({ message: 'Failed to fetch weather' }, { status: 500 });
     }
 
     const data = await res.json();
+    const forecastDays: WeatherApiForecastDay[] = data.forecast?.forecastday || [];
 
-    const dailyMap = new Map<
-      string,
-      { temp_min: number; temp_max: number; humidity: number; description: string; icon: string; wind_speed: number }
-    >();
-
-    data.list.forEach((item: ForecastItem) => {
-      const date = item.dt_txt.split(' ')[0];
-      const existing = dailyMap.get(date);
-
-      if (!existing) {
-        dailyMap.set(date, {
-          temp_min: item.main.temp_min,
-          temp_max: item.main.temp_max,
-          humidity: item.main.humidity,
-          description: item.weather[0].description,
-          icon: item.weather[0].icon,
-          wind_speed: item.wind.speed,
-        });
-      } else {
-        existing.temp_min = Math.min(existing.temp_min, item.main.temp_min);
-        existing.temp_max = Math.max(existing.temp_max, item.main.temp_max);
-      }
-    });
-
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const days = Array.from(dailyMap.entries())
-      .filter(([dateStr]) => new Date(dateStr) >= tomorrow)
-      .slice(0, 3)
-      .map(([dateStr, info]) => ({
-        date: new Date(dateStr).toLocaleDateString('he-IL', {
+    const days = forecastDays
+      .slice(1, 4)
+      .map((fd) => ({
+        date: new Date(fd.date).toLocaleDateString('he-IL', {
           weekday: 'short',
           day: 'numeric',
           month: 'short',
         }),
-        ...info,
+        temp_min: fd.day.mintemp_c,
+        temp_max: fd.day.maxtemp_c,
+        humidity: fd.day.avghumidity,
+        description: fd.day.condition.text,
+        icon: fd.day.condition.icon,
+        wind_speed: fd.day.maxwind_kph,
       }));
 
     return NextResponse.json({ location: decodeURIComponent(location), days });
   } catch (error) {
     console.error('Weather API error:', error);
-    return NextResponse.json({ message: 'שגיאה בשליפת מזג אוויר' }, { status: 500 });
+    return NextResponse.json({ message: 'Failed to fetch weather' }, { status: 500 });
   }
 }

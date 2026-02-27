@@ -72,9 +72,9 @@ async function main() {
 
   log('\n  Enter your API keys (press Enter to skip a field):\n', 'cyan');
 
-  const groqKey = await ask('  Groq API Key (gsk_...) [חינמי]: ');
-  const unsplashKey = await ask('  Unsplash Access Key (אופציונלי - לתמונות): ');
-  const weatherKey = await ask('  OpenWeatherMap API Key: ');
+  const groqKey = await ask('  Groq API Key (gsk_...) [free]: ');
+  const unsplashKey = await ask('  Unsplash Access Key (optional - for images): ');
+  const weatherKey = await ask('  WeatherAPI.com Key: ');
   const orsKey = await ask('  OpenRouteService API Key: ');
   const mongoUri = await ask('  MongoDB URI (Enter = localhost): ');
 
@@ -94,7 +94,7 @@ MONGODB_URI=${mongo}
 JWT_SECRET=${jwtSecret}
 GROQ_API_KEY=${groqKey.trim()}
 UNSPLASH_ACCESS_KEY=${unsplashKey.trim()}
-OPENWEATHER_API_KEY=${weatherKey.trim()}
+WEATHERAPI_KEY=${weatherKey.trim()}
 ORS_API_KEY=${orsKey.trim()}
 `;
 

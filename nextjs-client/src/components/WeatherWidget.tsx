@@ -7,7 +7,7 @@ interface WeatherWidgetProps {
 }
 
 const weatherIconUrl = (icon: string) =>
-  `https://openweathermap.org/img/wn/${icon}@2x.png`;
+  icon.startsWith('//') ? `https:${icon}` : icon;
 
 export default function WeatherWidget({ weather }: WeatherWidgetProps) {
   if (!weather || !weather.days || weather.days.length === 0) return null;

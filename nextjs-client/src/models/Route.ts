@@ -33,7 +33,7 @@ const dailyRouteSchema = new Schema(
     startLocation: { type: String, required: true },
     endLocation: { type: String, required: true },
     distance_km: { type: Number, required: true },
-    description: { type: String, required: true },
+    description: { type: String, default: '' },
     waypoints: [waypointSchema],
     routeGeometry: { type: [[Number]], default: [] },
   },

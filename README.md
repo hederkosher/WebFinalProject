@@ -26,7 +26,7 @@
 - **תכנון מסלולי אופניים**: 2-3 ימים רציפים, 30-70 ק"מ ליום, מעיר לעיר
 - **תכנון מסלולי טרק**: 1-3 מסלולים מעגליים, 5-10 ק"מ כל אחד
 - **מסלולים ריאליסטיים**: שימוש ב-OpenRouteService למסלולים על כבישים/שבילים אמיתיים
-- **תחזית מזג אוויר**: 3 ימים הקרובים באזור המסלול (OpenWeatherMap)
+- **תחזית מזג אוויר**: 3 ימים הקרובים באזור המסלול (WeatherAPI.com)
 - **תמונות**: תמונה מאפיינת של המדינה (DALL-E / Unsplash)
 - **שמירה והיסטוריה**: אישור ושמירת מסלולים בבסיס נתונים MongoDB
 
@@ -39,7 +39,7 @@
 | Database | MongoDB + Mongoose |
 | Maps | Leaflet.js, OpenRouteService |
 | AI/LLM | Groq (Llama 3.3 70B) - חינמי |
-| Weather | OpenWeatherMap API |
+| Weather | WeatherAPI.com |
 | Images | Unsplash API / Picsum |
 
 ## דרישות מוקדמות
@@ -48,7 +48,7 @@
 - **MongoDB** (מקומי או MongoDB Atlas)
 - **מפתחות API**:
   - Groq API Key (ליצירת מסלולים - חינמי)
-  - OpenWeatherMap API Key (תחזית מזג אוויר)
+  - WeatherAPI.com Key (תחזית מזג אוויר)
   - OpenRouteService API Key (ניתוב על מפות)
 
 ## התקנה
@@ -96,7 +96,7 @@ MONGODB_URI=mongodb://localhost:27017/travel-routes
 JWT_SECRET=your-secret-key-here  # (same as Express!)
 GROQ_API_KEY=gsk_...
 UNSPLASH_ACCESS_KEY=...  # optional
-OPENWEATHER_API_KEY=...
+WEATHERAPI_KEY=...
 ORS_API_KEY=...
 ```
 
@@ -130,8 +130,8 @@ npm run dev
 1. צור חשבון ב-[unsplash.com/developers](https://unsplash.com/developers)
 2. צור אפליקציה וקבל Access Key
 
-### OpenWeatherMap
-1. צור חשבון ב-[openweathermap.org](https://openweathermap.org)
+### WeatherAPI.com
+1. צור חשבון ב-[weatherapi.com](https://www.weatherapi.com/signup.aspx)
 2. קבל API Key חינמי (Free tier)
 
 ### OpenRouteService

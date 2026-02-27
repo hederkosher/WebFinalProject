@@ -15,7 +15,7 @@
 |--------|-------|-------|
 | Groq | יצירת מסלולים (LLM) - **חינמי** | [console.groq.com](https://console.groq.com) |
 | Unsplash | תמונות (אופציונלי) | [unsplash.com/developers](https://unsplash.com/developers) (חינמי) |
-| OpenWeatherMap | תחזית מזג אוויר | [openweathermap.org](https://openweathermap.org/api) (חינמי) |
+| WeatherAPI.com | תחזית מזג אוויר | [weatherapi.com](https://www.weatherapi.com/) (חינמי) |
 | OpenRouteService | ניתוב מסלולים על מפה | [openrouteservice.org](https://openrouteservice.org/dev/#/signup) (חינמי, 2000 בקשות/יום) |
 
 ---
@@ -27,6 +27,10 @@
 ```bash
 npm run setup
 ```
+
+**אם PowerShell מציג שגיאת Execution Policy**, השתמש באחת מהאפשרויות:
+- לחץ פעמיים על `run-setup.bat`
+- או הרץ ב-Command Prompt (cmd): `node setup.js`
 
 הסקריפט יתקין את כל החבילות, יבקש ממך את מפתחות ה-API וייצור את קבצי ההגדרות אוטומטית.
 
@@ -79,7 +83,7 @@ MONGODB_URI=mongodb://localhost:27017/travel-routes
 JWT_SECRET=your-secret-key-minimum-32-characters-long
 GROQ_API_KEY=gsk_your-groq-key-here
 UNSPLASH_ACCESS_KEY=your-unsplash-key-optional
-OPENWEATHER_API_KEY=your-key-here
+WEATHERAPI_KEY=your-key-here
 ORS_API_KEY=your-key-here
 ```
 
