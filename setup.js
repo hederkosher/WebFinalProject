@@ -29,48 +29,48 @@ function fileExists(p) {
 
 async function main() {
   log('\n========================================', 'cyan');
-  log('  מסלול טיולים אפקה 2026 - הגדרה ראשונית', 'bold');
+  log('  Travel Routes Afeka 2026 - Initial Setup', 'bold');
   log('========================================\n', 'cyan');
 
   // Step 1: Install dependencies
-  log('[1/3] התקנת חבילות...', 'yellow');
+  log('[1/3] Installing packages...', 'yellow');
 
   if (!fileExists(path.join(ROOT, 'node_modules'))) {
-    log('  -> מתקין חבילות root...', 'cyan');
+    log('  -> Installing root packages...', 'cyan');
     execSync('npm install', { cwd: ROOT, stdio: 'inherit' });
   }
 
   if (!fileExists(path.join(EXPRESS_DIR, 'node_modules'))) {
-    log('  -> מתקין חבילות Express server...', 'cyan');
+    log('  -> Installing Express server packages...', 'cyan');
     execSync('npm install', { cwd: EXPRESS_DIR, stdio: 'inherit' });
   } else {
-    log('  -> Express server - חבילות כבר מותקנות ✓', 'green');
+    log('  -> Express server - packages already installed ✓', 'green');
   }
 
   if (!fileExists(path.join(NEXT_DIR, 'node_modules'))) {
-    log('  -> מתקין חבילות Next.js...', 'cyan');
+    log('  -> Installing Next.js packages...', 'cyan');
     execSync('npm install', { cwd: NEXT_DIR, stdio: 'inherit' });
   } else {
-    log('  -> Next.js - חבילות כבר מותקנות ✓', 'green');
+    log('  -> Next.js - packages already installed ✓', 'green');
   }
 
   // Step 2: Configure .env files
-  log('\n[2/3] הגדרת משתני סביבה...', 'yellow');
+  log('\n[2/3] Configuring environment variables...', 'yellow');
 
   const expressEnvPath = path.join(EXPRESS_DIR, '.env');
   const nextEnvPath = path.join(NEXT_DIR, '.env.local');
 
   if (fileExists(expressEnvPath) && fileExists(nextEnvPath)) {
-    log('  -> קבצי .env כבר קיימים ✓', 'green');
-    const overwrite = await ask('  -> האם לדרוס אותם? (y/N): ');
+    log('  -> .env files already exist ✓', 'green');
+    const overwrite = await ask('  -> Overwrite them? (y/N): ');
     if (overwrite.toLowerCase() !== 'y') {
-      log('  -> דילוג על הגדרת .env', 'cyan');
+      log('  -> Skipping .env configuration', 'cyan');
       finishSetup();
       return;
     }
   }
 
-  log('\n  הכנס את מפתחות ה-API שלך (Enter לדלג על שדה):\n', 'cyan');
+  log('\n  Enter your API keys (press Enter to skip a field):\n', 'cyan');
 
   const openaiKey = await ask('  OpenAI API Key (sk-...): ');
   const weatherKey = await ask('  OpenWeatherMap API Key: ');
@@ -98,22 +98,22 @@ ORS_API_KEY=${orsKey.trim()}
 
   fs.writeFileSync(expressEnvPath, expressEnv);
   fs.writeFileSync(nextEnvPath, nextEnv);
-  log('  -> קבצי .env נוצרו בהצלחה ✓', 'green');
+  log('  -> .env files created successfully ✓', 'green');
 
   finishSetup();
 
   function finishSetup() {
-    log('\n[3/3] סיכום', 'yellow');
+    log('\n[3/3] Summary', 'yellow');
     log('========================================', 'cyan');
-    log('  ההגדרה הושלמה בהצלחה! 🎉', 'green');
+    log('  Setup completed successfully! 🎉', 'green');
     log('========================================', 'cyan');
-    log('\n  להפעלת הפרויקט הרץ:', 'bold');
+    log('\n  To run the project:', 'bold');
     log('    npm run dev', 'cyan');
-    log('\n  או לחץ פעמיים על:', 'bold');
+    log('\n  Or double-click:', 'bold');
     log('    start.bat', 'cyan');
-    log('\n  האתר יהיה זמין ב:', 'bold');
+    log('\n  The app will be available at:', 'bold');
     log('    http://localhost:3000', 'cyan');
-    log('\n  ודא ש-MongoDB פועל לפני ההפעלה!\n', 'red');
+    log('\n  Make sure MongoDB is running before starting!\n', 'red');
     rl.close();
   }
 }
