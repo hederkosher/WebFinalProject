@@ -44,21 +44,45 @@ if [ ! -f "nextjs-client/.env.local" ]; then
     echo ""
 fi
 
+# Create launcher scripts to avoid path/quoting issues (handles Hebrew, spaces, etc.)
+LAUNCHER_EXPRESS=$(mktemp)
+LAUNCHER_NEXT=$(mktemp)
+cat > "$LAUNCHER_EXPRESS" << EOF
+#!/bin/bash
+cd "$DIR/express-server" && exec npm run dev
+EOF
+cat > "$LAUNCHER_NEXT" << EOF
+#!/bin/bash
+cd "$DIR/nextjs-client" && exec npm run dev
+EOF
+chmod +x "$LAUNCHER_EXPRESS" "$LAUNCHER_NEXT"
+
 echo "[1/2] Starting Express auth server on port 4000..."
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    osascript -e "tell application \"Terminal\" to do script \"cd '$DIR/express-server' && npm run dev\""
+    osascript -e "tell application \"Terminal\" to do script \"$LAUNCHER_EXPRESS\""
 else
-    (cd express-server && npm run dev) &
+    "$LAUNCHER_EXPRESS" &
 fi
 
-# Brief pause to let Express start first
-sleep 2
+# Wait for Express to be ready (up to 30 seconds)
+echo "    Waiting for Express to start..."
+for i in {1..30}; do
+    if curl -s http://localhost:4000/health > /dev/null 2>&1; then
+        echo "    Express is ready!"
+        break
+    fi
+    if [ $i -eq 30 ]; then
+        echo "[WARNING] Express may not have started. Check the Express terminal for errors."
+        echo "          Make sure MongoDB is running (run 'mongod' if using local MongoDB)."
+    fi
+    sleep 1
+done
 
 echo "[2/2] Starting Next.js app on port 3000..."
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    osascript -e "tell application \"Terminal\" to do script \"cd '$DIR/nextjs-client' && npm run dev\""
+    osascript -e "tell application \"Terminal\" to do script \"$LAUNCHER_NEXT\""
 else
-    (cd nextjs-client && npm run dev) &
+    "$LAUNCHER_NEXT" &
 fi
 
 echo ""
