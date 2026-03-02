@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import TokenRefresher from '@/components/TokenRefresher';
+
+const LightPillarBackground = dynamic(() => import('@/components/LightPillarBackground'), { ssr: false });
 
 export const metadata: Metadata = {
   title: 'מסלול טיולים אפקה 2026',
@@ -23,10 +26,12 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 font-hebrew">
+      <body className="min-h-screen bg-slate-100 font-hebrew">
         <TokenRefresher />
+        <LightPillarBackground />
+        <div className="fixed inset-0 pointer-events-none z-[1] bg-gradient-to-b from-white/65 via-white/45 to-slate-100/60" />
         <Navbar />
-        <main className="pt-16">{children}</main>
+        <main className="relative z-10 pt-16">{children}</main>
       </body>
     </html>
   );

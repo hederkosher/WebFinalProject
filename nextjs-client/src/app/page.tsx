@@ -1,13 +1,8 @@
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
-
-const LightPillarBackground = dynamic(() => import('@/components/LightPillarBackground'), { ssr: false });
 
 export default function HomePage() {
   return (
     <div className="min-h-screen relative">
-      <LightPillarBackground />
-
       {/* Hero Section */}
       <section className="relative overflow-hidden py-24 px-4">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-600/10 via-transparent to-accent-500/10" />

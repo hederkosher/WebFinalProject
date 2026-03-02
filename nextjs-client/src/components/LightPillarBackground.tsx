@@ -11,14 +11,14 @@ export default function LightPillarBackground() {
       style={{ zIndex: 0 }}
     >
       <LightPillar
-        topColor="#669c35"
-        bottomColor="#77bb41"
-        intensity={1}
+        topColor="#7ab84a"
+        bottomColor="#8ed45a"
+        intensity={1.4}
         rotationSpeed={0.3}
-        glowAmount={0.002}
+        glowAmount={0.004}
         pillarWidth={3}
         pillarHeight={0.4}
-        noiseIntensity={0.5}
+        noiseIntensity={0.35}
         pillarRotation={25}
         interactive={false}
         mixBlendMode="screen"
