@@ -1,8 +1,11 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Cookies from 'js-cookie';
+
+const LightPillarBackground = dynamic(() => import('@/components/LightPillarBackground'), { ssr: false });
 
 export default function LoginPage() {
   return (
@@ -75,9 +78,7 @@ function LoginForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden">
-      <div className="absolute top-20 right-[10%] w-80 h-80 bg-primary-400/15 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-20 left-[10%] w-72 h-72 bg-accent-400/15 rounded-full blur-3xl animate-float-delay" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-200/10 rounded-full blur-3xl animate-float-slow" />
+      <LightPillarBackground />
 
       <div className="w-full max-w-md relative z-10 animate-scale-in">
         <div className="text-center mb-8">

@@ -1,14 +1,16 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
+
+const LightPillarBackground = dynamic(() => import('@/components/LightPillarBackground'), { ssr: false });
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      <LightPillarBackground />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden py-24 px-4">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-600/10 via-transparent to-accent-500/10" />
-        <div className="absolute top-20 right-[10%] w-72 h-72 bg-primary-400/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-10 left-[15%] w-64 h-64 bg-accent-400/20 rounded-full blur-3xl animate-float-delay" />
-        <div className="absolute top-40 left-[40%] w-48 h-48 bg-yellow-300/15 rounded-full blur-3xl animate-float-slow" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <div className="animate-fade-in inline-block mb-6 px-5 py-2 bg-primary-100/80 backdrop-blur-sm text-primary-700 rounded-full text-sm font-semibold border border-primary-200/50">
