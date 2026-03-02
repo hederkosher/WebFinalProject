@@ -32,6 +32,12 @@ if [ ! -d "nextjs-client/node_modules" ]; then
     (cd nextjs-client && npm install)
 fi
 
+# Start MongoDB (macOS with Homebrew)
+if [[ "$OSTYPE" == "darwin"* ]] && command -v brew &> /dev/null; then
+    echo "[SETUP] Starting MongoDB..."
+    brew services start mongodb-community@8.0
+fi
+
 # Check .env files
 if [ ! -f "express-server/.env" ]; then
     echo "[WARNING] express-server/.env not found!"
@@ -49,7 +55,17 @@ LAUNCHER_EXPRESS=$(mktemp)
 LAUNCHER_NEXT=$(mktemp)
 cat > "$LAUNCHER_EXPRESS" << EOF
 #!/bin/bash
-cd "$DIR/express-server" && exec npm run dev
+cleanup() {
+    if [[ "\$OSTYPE" == "darwin"* ]] && command -v brew &> /dev/null; then
+        echo ""
+        echo "[CLEANUP] Stopping MongoDB..."
+        brew services stop mongodb-community@8.0
+    fi
+    exit 0
+}
+trap cleanup INT TERM
+cd "$DIR/express-server" && npm run dev
+cleanup
 EOF
 cat > "$LAUNCHER_NEXT" << EOF
 #!/bin/bash
@@ -92,7 +108,7 @@ echo ""
 echo "  Next.js:   http://localhost:3000"
 echo "  Express:   http://localhost:4000"
 echo ""
-echo "  (close the server windows to stop)"
+echo "  (close the server windows to stop - MongoDB will stop when Express closes)"
 echo "========================================"
 echo ""
 
