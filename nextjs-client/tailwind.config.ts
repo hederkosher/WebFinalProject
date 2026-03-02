@@ -37,6 +37,13 @@ const config: Config = {
       fontFamily: {
         hebrew: ['Heebo', 'Arial', 'sans-serif'],
       },
+      borderRadius: {
+        '4xl': '2rem',
+      },
+      boxShadow: {
+        'glow': '0 0 20px rgba(59, 130, 246, 0.15)',
+        'glow-accent': '0 0 20px rgba(34, 197, 94, 0.15)',
+      },
     },
   },
   plugins: [],

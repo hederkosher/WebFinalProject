@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userName, setUserName] = useState('');
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const token = Cookies.get('token');
@@ -24,6 +25,12 @@ export default function Navbar() {
       } catch { /* ignore */ }
     }
   }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -46,11 +53,19 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-slate-200/50">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'glass-card-strong border-b border-slate-200/60 shadow-lg shadow-slate-200/20'
+          : 'bg-white/60 backdrop-blur-sm border-b border-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🥾</span>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-md shadow-primary-200/50 group-hover:shadow-lg group-hover:scale-105 transition-all">
+              <span className="text-lg">🥾</span>
+            </div>
             <span className="text-lg font-bold text-gradient">מסלול טיולים אפקה</span>
           </Link>
 
@@ -59,13 +74,13 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                   pathname === link.href
-                    ? 'bg-primary-100 text-primary-700'
+                    ? 'bg-primary-100 text-primary-700 shadow-sm'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                 }`}
               >
-                <span className="ml-1">{link.icon}</span>
+                <span className="ml-1.5">{link.icon}</span>
                 {link.label}
               </Link>
             ))}
@@ -73,19 +88,21 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-3">
             {isLoggedIn && userName && (
-              <span className="text-sm text-slate-600">שלום, {userName}</span>
+              <span className="text-sm text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg">
+                שלום, <span className="font-semibold text-slate-700">{userName}</span>
+              </span>
             )}
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                className="px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-red-200"
               >
                 התנתק
               </button>
             ) : (
               <Link
                 href="/login"
-                className="px-4 py-2 text-sm font-medium bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all"
+                className="px-5 py-2 text-sm font-semibold bg-gradient-to-l from-primary-600 to-primary-500 text-white rounded-xl hover:from-primary-700 hover:to-primary-600 transition-all shadow-md shadow-primary-200/40 hover:shadow-lg"
               >
                 התחבר
               </Link>
@@ -94,7 +111,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+            className="md:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {menuOpen ? (
@@ -107,26 +124,26 @@ export default function Navbar() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden pb-4 border-t border-slate-200 mt-2 pt-2">
+          <div className="md:hidden pb-4 border-t border-slate-200/50 mt-2 pt-3 space-y-1 animate-fade-in">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`block px-4 py-2 rounded-lg text-sm font-medium ${
+                className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   pathname === link.href
                     ? 'bg-primary-100 text-primary-700'
                     : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
-                <span className="ml-1">{link.icon}</span>
+                <span className="ml-1.5">{link.icon}</span>
                 {link.label}
               </Link>
             ))}
             {isLoggedIn && (
               <button
                 onClick={handleLogout}
-                className="w-full text-right px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg mt-2"
+                className="w-full text-right px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl mt-2 transition-colors"
               >
                 התנתק
               </button>

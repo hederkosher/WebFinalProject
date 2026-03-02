@@ -22,9 +22,11 @@ export default function PlanningForm({ onSubmit, isLoading }: PlanningFormProps)
   };
 
   return (
-    <form onSubmit={handleSubmit} className="glass-card rounded-xl p-6 space-y-5">
+    <form onSubmit={handleSubmit} className="glass-card-strong rounded-2xl p-6 space-y-5">
       <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-        <span>✨</span>
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-sm">
+          ✨
+        </div>
         תכנון מסלול חדש
       </h2>
 
@@ -37,7 +39,7 @@ export default function PlanningForm({ onSubmit, isLoading }: PlanningFormProps)
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
           placeholder="לדוגמה: טוסקנה, איטליה"
-          className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all bg-white text-slate-800 placeholder:text-slate-400"
+          className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-100 outline-none transition-all bg-white/70 text-slate-800 placeholder:text-slate-400"
           required
           disabled={isLoading}
         />
@@ -55,15 +57,15 @@ export default function PlanningForm({ onSubmit, isLoading }: PlanningFormProps)
               setDurationDays(2);
             }}
             disabled={isLoading}
-            className={`p-3 rounded-lg border-2 transition-all text-center ${
+            className={`p-4 rounded-xl border-2 transition-all duration-200 text-center ${
               tripType === 'cycling'
-                ? 'border-primary-500 bg-primary-50 text-primary-700'
-                : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                ? 'border-primary-500 bg-primary-50 text-primary-700 shadow-md shadow-primary-100'
+                : 'border-slate-200 bg-white/60 text-slate-600 hover:border-slate-300 hover:bg-white'
             }`}
           >
-            <div className="text-2xl mb-1">🚴</div>
-            <div className="text-sm font-semibold">אופניים</div>
-            <div className="text-xs text-slate-400">30-70 ק&quot;מ ליום</div>
+            <div className="text-3xl mb-1.5">🚴</div>
+            <div className="text-sm font-bold">אופניים</div>
+            <div className="text-xs text-slate-400 mt-0.5">30-70 ק&quot;מ ליום</div>
           </button>
           <button
             type="button"
@@ -72,15 +74,15 @@ export default function PlanningForm({ onSubmit, isLoading }: PlanningFormProps)
               setDurationDays(1);
             }}
             disabled={isLoading}
-            className={`p-3 rounded-lg border-2 transition-all text-center ${
+            className={`p-4 rounded-xl border-2 transition-all duration-200 text-center ${
               tripType === 'trekking'
-                ? 'border-accent-500 bg-accent-50 text-accent-700'
-                : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                ? 'border-accent-500 bg-accent-50 text-accent-700 shadow-md shadow-accent-100'
+                : 'border-slate-200 bg-white/60 text-slate-600 hover:border-slate-300 hover:bg-white'
             }`}
           >
-            <div className="text-2xl mb-1">🥾</div>
-            <div className="text-sm font-semibold">טרק רגלי</div>
-            <div className="text-xs text-slate-400">5-10 ק&quot;מ למסלול</div>
+            <div className="text-3xl mb-1.5">🥾</div>
+            <div className="text-sm font-bold">טרק רגלי</div>
+            <div className="text-xs text-slate-400 mt-0.5">5-10 ק&quot;מ למסלול</div>
           </button>
         </div>
       </div>
@@ -99,11 +101,11 @@ export default function PlanningForm({ onSubmit, isLoading }: PlanningFormProps)
             disabled={isLoading}
             className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
           />
-          <span className="text-lg font-bold text-primary-700 bg-primary-50 w-10 h-10 flex items-center justify-center rounded-lg">
+          <span className="text-lg font-black text-primary-700 bg-primary-50 w-11 h-11 flex items-center justify-center rounded-xl border border-primary-200">
             {durationDays}
           </span>
         </div>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-400 mt-1.5">
           {tripType === 'cycling'
             ? `מסלול רכיבה רציף של ${durationDays} ימים מעיר לעיר`
             : `${durationDays} מסלולים מעגליים שמתחילים ומסתיימים באותה נקודה`}
@@ -113,7 +115,7 @@ export default function PlanningForm({ onSubmit, isLoading }: PlanningFormProps)
       <button
         type="submit"
         disabled={isLoading || !destination.trim()}
-        className="w-full py-3 px-4 bg-gradient-to-l from-primary-600 to-primary-500 text-white font-semibold rounded-lg hover:from-primary-700 hover:to-primary-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary-200"
+        className="w-full py-3.5 px-4 bg-gradient-to-l from-primary-600 to-primary-500 text-white font-bold rounded-xl hover:from-primary-700 hover:to-primary-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary-200/50 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 text-base"
       >
         {isLoading ? (
           <span className="flex items-center justify-center gap-2">

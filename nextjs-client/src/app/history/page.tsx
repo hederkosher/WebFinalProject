@@ -6,6 +6,7 @@ import RouteCard from '@/components/RouteCard';
 import WeatherWidget from '@/components/WeatherWidget';
 import type { TripRoute, WeatherForecast } from '@/lib/types';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 const MapView = dynamic(() => import('@/components/MapView'), { ssr: false });
 
@@ -84,30 +85,41 @@ export default function HistoryPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-        <span>📋</span>
+      <h1 className="text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-xl shadow-md shadow-primary-200/50">
+          📋
+        </div>
         היסטוריית מסלולים
       </h1>
 
       {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <svg className="animate-spin h-8 w-8 text-primary-500" viewBox="0 0 24 24">
+        <div className="flex flex-col items-center justify-center py-24 gap-3">
+          <svg className="animate-spin h-10 w-10 text-primary-500" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
+          <p className="text-slate-400 text-sm">טוען מסלולים...</p>
         </div>
       ) : routes.length === 0 ? (
-        <div className="text-center py-20">
-          <div className="text-6xl mb-4">📭</div>
+        <div className="text-center py-24 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-slate-100 mb-6">
+            <span className="text-5xl">📭</span>
+          </div>
           <h2 className="text-2xl font-bold text-slate-800 mb-2">אין מסלולים שמורים</h2>
-          <p className="text-slate-500">
+          <p className="text-slate-500 mb-6 max-w-sm mx-auto">
             עבור לדף תכנון מסלולים כדי ליצור ולשמור מסלול חדש.
           </p>
+          <Link
+            href="/planning"
+            className="inline-block px-8 py-3 bg-gradient-to-l from-primary-600 to-primary-500 text-white font-bold rounded-xl hover:from-primary-700 hover:to-primary-600 transition-all shadow-lg shadow-primary-200/50 hover:-translate-y-0.5"
+          >
+            🗺️ תכנון מסלולים
+          </Link>
         </div>
       ) : (
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Route list */}
-          <div className="lg:col-span-1 space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto">
+          <div className="lg:col-span-1 space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto pl-1">
             {routes.map((route) => (
               <div key={route._id} className="relative group">
                 <RouteCard
@@ -120,7 +132,7 @@ export default function HistoryPage() {
                     e.stopPropagation();
                     handleDelete(route._id!);
                   }}
-                  className="absolute top-2 left-2 w-8 h-8 rounded-full bg-red-100 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-sm hover:bg-red-200"
+                  className="absolute top-2 left-2 w-8 h-8 rounded-full bg-red-100 text-red-500 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center text-sm hover:bg-red-200 hover:scale-110"
                   title="מחק מסלול"
                 >
                   ✕
@@ -132,25 +144,25 @@ export default function HistoryPage() {
           {/* Route details */}
           <div className="lg:col-span-2 space-y-6">
             {selectedRoute ? (
-              <>
-                <div className="glass-card rounded-xl overflow-hidden" style={{ height: '450px' }}>
+              <div className="animate-fade-in">
+                <div className="glass-card rounded-2xl overflow-hidden" style={{ height: '450px' }}>
                   <MapView dailyRoutes={selectedRoute.dailyRoutes} />
                 </div>
 
-                <div className="flex items-center gap-4 flex-wrap">
-                  <h2 className="text-2xl font-bold text-slate-800">
+                <div className="flex items-center gap-4 flex-wrap mt-6">
+                  <h2 className="text-2xl font-black text-slate-800">
                     {selectedRoute.destination}
                   </h2>
-                  <span className="text-sm bg-primary-100 text-primary-700 px-3 py-1 rounded-full font-medium">
+                  <span className="text-sm bg-primary-100 text-primary-700 px-3 py-1 rounded-full font-semibold border border-primary-200">
                     {selectedRoute.tripType === 'cycling' ? '🚴 אופניים' : '🥾 טרק'}
                   </span>
-                  <span className="text-sm text-slate-500">
+                  <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
                     {selectedRoute.durationDays} ימים | {totalDistance.toFixed(1)} ק&quot;מ
                   </span>
                 </div>
 
                 {selectedRoute.imageUrl && (
-                  <div className="rounded-xl overflow-hidden h-40 shadow-lg">
+                  <div className="rounded-2xl overflow-hidden h-40 shadow-xl mt-5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={selectedRoute.imageUrl}
@@ -160,38 +172,48 @@ export default function HistoryPage() {
                   </div>
                 )}
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
                   {selectedRoute.dailyRoutes.map((day) => (
-                    <div key={day.day} className="glass-card rounded-xl p-4">
-                      <h3 className="font-bold text-slate-800 mb-2">יום {day.day}</h3>
+                    <div key={day.day} className="glass-card rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+                          {day.day}
+                        </span>
+                        <h3 className="font-bold text-slate-800">יום {day.day}</h3>
+                      </div>
                       <p className="text-sm text-slate-600">
                         {day.startLocation} → {day.endLocation}
                       </p>
-                      <p className="text-sm font-semibold text-primary-700 mt-1">
+                      <p className="text-sm font-bold text-primary-700 mt-1">
                         {day.distance_km} ק&quot;מ
                       </p>
-                      <p className="text-xs text-slate-500 mt-2">{day.description}</p>
+                      <p className="text-xs text-slate-400 mt-2 leading-relaxed">{day.description}</p>
                     </div>
                   ))}
                 </div>
 
-                {weatherLoading ? (
-                  <div className="glass-card rounded-xl p-6 text-center text-slate-500">
-                    <svg className="animate-spin h-6 w-6 mx-auto mb-2 text-primary-500" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
-                    טוען תחזית מזג אוויר...
-                  </div>
-                ) : (
-                  weather && <WeatherWidget weather={weather} />
-                )}
-              </>
+                <div className="mt-5">
+                  {weatherLoading ? (
+                    <div className="glass-card rounded-2xl p-8 text-center text-slate-500">
+                      <svg className="animate-spin h-7 w-7 mx-auto mb-3 text-primary-500" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      טוען תחזית מזג אוויר...
+                    </div>
+                  ) : (
+                    weather && <WeatherWidget weather={weather} />
+                  )}
+                </div>
+              </div>
             ) : (
-              <div className="glass-card rounded-xl p-12 text-center">
-                <div className="text-5xl mb-4">👈</div>
-                <p className="text-lg font-medium text-slate-600">
+              <div className="glass-card rounded-2xl p-16 text-center animate-fade-in">
+                <div className="text-6xl mb-5 animate-float-slow">👈</div>
+                <p className="text-lg font-semibold text-slate-500">
                   בחר מסלול מהרשימה כדי לצפות בפרטים
+                </p>
+                <p className="text-sm text-slate-400 mt-2">
+                  כל המסלולים שאישרת מופיעים ברשימה משמאל
                 </p>
               </div>
             )}
