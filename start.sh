@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Get script directory (project root)
+DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$DIR"
+
 echo ""
 echo "========================================"
 echo "  Travel Routes Afeka 2026"
@@ -40,16 +44,33 @@ if [ ! -f "nextjs-client/.env.local" ]; then
     echo ""
 fi
 
-echo "[INFO] Starting both servers (Express + Next.js)..."
+echo "[1/2] Starting Express auth server on port 4000..."
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    osascript -e "tell application \"Terminal\" to do script \"cd '$DIR/express-server' && npm run dev\""
+else
+    (cd express-server && npm run dev) &
+fi
+
+# Brief pause to let Express start first
+sleep 2
+
+echo "[2/2] Starting Next.js app on port 3000..."
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    osascript -e "tell application \"Terminal\" to do script \"cd '$DIR/nextjs-client' && npm run dev\""
+else
+    (cd nextjs-client && npm run dev) &
+fi
+
+echo ""
+echo "========================================"
+echo "  Both servers are starting!"
 echo ""
 echo "  Next.js:   http://localhost:3000"
 echo "  Express:   http://localhost:4000"
 echo ""
-echo "  Press Ctrl+C to stop"
+echo "  (close the server windows to stop)"
 echo "========================================"
 echo ""
 
-# Open browser after a short delay (in background)
-(sleep 5 && open http://localhost:3000 2>/dev/null) &
-
-npm run dev
+sleep 5
+open http://localhost:3000 2>/dev/null || xdg-open http://localhost:3000 2>/dev/null || true
