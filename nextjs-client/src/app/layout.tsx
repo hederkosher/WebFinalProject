@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import TokenRefresher from '@/components/TokenRefresher';
 
 const LightPillarBackground = dynamic(() => import('@/components/LightPillarBackground'), { ssr: false });
@@ -26,12 +27,13 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body className="min-h-screen bg-slate-100 font-hebrew">
+      <body className="min-h-screen flex flex-col bg-slate-100 font-hebrew">
         <TokenRefresher />
         <LightPillarBackground />
         <div className="fixed inset-0 pointer-events-none z-[1] bg-gradient-to-b from-white/65 via-white/45 to-slate-100/60" />
         <Navbar />
-        <main className="relative z-10 pt-16">{children}</main>
+        <main className="relative z-10 pt-16 flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );

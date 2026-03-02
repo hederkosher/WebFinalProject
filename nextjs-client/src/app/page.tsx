@@ -118,11 +118,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 text-center text-sm text-slate-400 border-t border-slate-200/50">
-        <p>פרויקט סיום - פיתוח בפלטפורמת WEB | אפקה 2026</p>
-      </footer>
     </div>
   );
 }
