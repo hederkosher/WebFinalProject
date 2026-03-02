@@ -9,10 +9,7 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center">
-          <svg className="animate-spin h-8 w-8 text-primary-500" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-          </svg>
+          <div className="w-6 h-6 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin" />
         </div>
       }
     >
@@ -74,43 +71,46 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden">
-      <div className="w-full max-w-md relative z-10 animate-scale-in">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-sm animate-fade-in">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-primary-500 to-accent-500 shadow-xl shadow-primary-200/50 mb-5">
-            <span className="text-4xl">🥾</span>
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-900 mb-4">
+            <span className="text-2xl">🥾</span>
           </div>
-          <h1 className="text-3xl font-black text-slate-900">מסלול טיולים אפקה</h1>
-          <p className="text-slate-500 mt-2 text-lg">
-            {isRegister ? 'יצירת חשבון חדש' : 'התחברות למערכת'}
+          <h1 className="text-2xl font-bold text-slate-900">
+            {isRegister ? 'יצירת חשבון' : 'התחברות'}
+          </h1>
+          <p className="text-slate-500 mt-1 text-sm">
+            {isRegister ? 'הירשם כדי להתחיל לתכנן מסלולים' : 'התחבר כדי לגשת למסלולים שלך'}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="glass-card-strong rounded-3xl p-8 space-y-5">
+        <form onSubmit={handleSubmit} className="glass-card-strong rounded-2xl p-6 space-y-4">
           {isRegister && (
             <>
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1.5">שם מלא</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">שם מלא</label>
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="השם המלא שלך"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-100 outline-none transition-all bg-white/70"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all bg-white text-sm"
                   required
                   disabled={loading}
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                  שם בן/בת זוג (אופציונלי)
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  שם בן/בת זוג
+                  <span className="text-slate-400 font-normal mr-1">(אופציונלי)</span>
                 </label>
                 <input
                   type="text"
                   value={partnerName}
                   onChange={(e) => setPartnerName(e.target.value)}
                   placeholder="שם בן/בת הזוג לפרויקט"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-100 outline-none transition-all bg-white/70"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all bg-white text-sm"
                   disabled={loading}
                 />
               </div>
@@ -118,13 +118,13 @@ function LoginForm() {
           )}
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1.5">אימייל</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1">אימייל</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@example.com"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-100 outline-none transition-all bg-white/70"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all bg-white text-sm"
               required
               disabled={loading}
               dir="ltr"
@@ -132,13 +132,13 @@ function LoginForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1.5">סיסמה</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1">סיסמה</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="לפחות 6 תווים"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary-500 focus:ring-4 focus:ring-primary-100 outline-none transition-all bg-white/70"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all bg-white text-sm"
               required
               minLength={6}
               disabled={loading}
@@ -147,8 +147,10 @@ function LoginForm() {
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
-              <span className="text-red-400">⚠️</span>
+            <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.07 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
               {error}
             </div>
           )}
@@ -156,15 +158,12 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-gradient-to-l from-primary-600 to-primary-500 text-white font-bold rounded-xl hover:from-primary-700 hover:to-primary-600 transition-all disabled:opacity-50 shadow-lg shadow-primary-200/50 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 text-lg"
+            className="w-full py-2.5 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition-all disabled:opacity-50 text-sm"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-                מתחבר...
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                {isRegister ? 'נרשם...' : 'מתחבר...'}
               </span>
             ) : isRegister ? (
               'הרשמה'
@@ -173,14 +172,14 @@ function LoginForm() {
             )}
           </button>
 
-          <div className="text-center pt-2">
+          <div className="text-center">
             <button
               type="button"
               onClick={() => {
                 setIsRegister(!isRegister);
                 setError('');
               }}
-              className="text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
+              className="text-sm text-slate-500 hover:text-slate-900 font-medium transition-colors"
             >
               {isRegister ? 'כבר יש לך חשבון? התחבר' : 'אין לך חשבון? הירשם'}
             </button>

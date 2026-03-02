@@ -13,10 +13,12 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Heebo', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background-color: rgba(59, 130, 246, 0.2);
+  background-color: rgba(59, 130, 246, 0.15);
   color: #1e3a8a;
 }
 
@@ -25,6 +27,16 @@ body {
     direction: rtl;
     scroll-behavior: smooth;
   }
+
+  *:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.01em;
+  }
 }
 
 @layer utilities {
@@ -32,22 +44,23 @@ body {
     @apply bg-clip-text text-transparent bg-gradient-to-l from-primary-600 to-accent-500;
   }
   .glass-card {
-    @apply bg-white/85 backdrop-blur-md border border-slate-200/60 shadow-lg;
+    @apply bg-white/80 backdrop-blur-md border border-slate-200/50 shadow-sm;
   }
   .glass-card-strong {
-    @apply bg-white/95 backdrop-blur-lg border border-slate-200/70 shadow-xl;
+    @apply bg-white/95 backdrop-blur-lg border border-slate-200/60 shadow-md;
   }
 }
 
 @layer components {
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+    animation: fadeIn 0.5s ease-out forwards;
   }
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out forwards;
+    animation: slideUp 0.5s ease-out forwards;
+    opacity: 0;
   }
   .animate-scale-in {
-    animation: scaleIn 0.5s ease-out forwards;
+    animation: scaleIn 0.4s ease-out forwards;
   }
   .animate-float {
     animation: float 6s ease-in-out infinite;
@@ -63,11 +76,18 @@ body {
     animation: gradientShift 8s ease infinite;
   }
   .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
-  .stagger-5 { animation-delay: 0.5s; }
-  .stagger-6 { animation-delay: 0.6s; }
+  .stagger-2 { animation-delay: 0.15s; }
+  .stagger-3 { animation-delay: 0.25s; }
+  .stagger-4 { animation-delay: 0.35s; }
+  .stagger-5 { animation-delay: 0.45s; }
+  .stagger-6 { animation-delay: 0.55s; }
+
+  .section-padding {
+    @apply py-16 sm:py-24 px-4 sm:px-6;
+  }
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }
 
 @keyframes fadeIn {
@@ -76,18 +96,18 @@ body {
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
+  from { opacity: 0; transform: scale(0.96); }
   to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  50% { transform: translateY(-16px); }
 }
 
 @keyframes gradientShift {
@@ -98,7 +118,7 @@ body {
 
 @keyframes pulse-soft {
   0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  50% { opacity: 0.7; }
 }
 
 .leaflet-container {
@@ -109,7 +129,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -120,4 +140,29 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.05);
 }

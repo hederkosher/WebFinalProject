@@ -104,35 +104,37 @@ export default function PlanningPage() {
   const totalDistance = route?.dailyRoutes?.reduce((sum, r) => sum + r.distance_km, 0) || 0;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="grid lg:grid-cols-3 gap-6">
-        {/* Right side - Form */}
-        <div className="lg:col-span-1 space-y-5">
+    <div className="page-container py-6">
+      <div className="grid lg:grid-cols-3 gap-5">
+        {/* Form sidebar */}
+        <div className="lg:col-span-1 space-y-4">
           <PlanningForm onSubmit={handlePlan} isLoading={isLoading} />
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm flex items-center gap-2 animate-scale-in">
-              <span>⚠️</span>
+            <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded-lg text-sm flex items-center gap-2 animate-scale-in">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.07 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
               {error}
             </div>
           )}
 
           {route && !saved && (
-            <div className="glass-card-strong rounded-2xl p-5 space-y-3 animate-scale-in">
-              <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-accent-100 flex items-center justify-center text-xs">✓</span>
+            <div className="glass-card-strong rounded-2xl p-4 space-y-3 animate-scale-in">
+              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-accent-100 text-accent-700 flex items-center justify-center text-xs">✓</span>
                 אשר את המסלול
               </h3>
-              <p className="text-sm text-slate-500">
+              <p className="text-xs text-slate-500">
                 לאחר אישור, המסלול יישמר ויהיה זמין בהיסטוריה.
               </p>
-              <div className="flex gap-3">
+              <div className="flex gap-2">
                 <button
                   onClick={handleApprove}
                   disabled={isSaving}
-                  className="flex-1 py-2.5 bg-gradient-to-l from-accent-500 to-accent-400 text-white font-bold rounded-xl hover:from-accent-600 hover:to-accent-500 transition-all disabled:opacity-50 shadow-md shadow-accent-200/50 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                  className="flex-1 py-2 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-700 transition-all disabled:opacity-50 text-sm"
                 >
-                  {isSaving ? 'שומר...' : '✓ אשר ושמור'}
+                  {isSaving ? 'שומר...' : 'אשר ושמור'}
                 </button>
                 <button
                   onClick={() => {
@@ -140,17 +142,19 @@ export default function PlanningPage() {
                     setWeather(null);
                     setImageUrl('');
                   }}
-                  className="py-2.5 px-5 bg-slate-100 text-slate-600 font-semibold rounded-xl hover:bg-slate-200 transition-all"
+                  className="py-2 px-4 bg-slate-100 text-slate-600 font-medium rounded-lg hover:bg-slate-200 transition-all text-sm"
                 >
-                  ✕ בטל
+                  בטל
                 </button>
               </div>
             </div>
           )}
 
           {saved && (
-            <div className="bg-accent-50 border border-accent-200 text-accent-700 px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2 animate-scale-in">
-              <span className="text-lg">🎉</span>
+            <div className="bg-accent-50 border border-accent-200 text-accent-700 px-3 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 animate-scale-in">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
               המסלול נשמר בהצלחה! ניתן לצפות בו בהיסטוריה.
             </div>
           )}
@@ -158,59 +162,59 @@ export default function PlanningPage() {
           {weather && <WeatherWidget weather={weather} />}
         </div>
 
-        {/* Left side - Map & Results */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="glass-card rounded-2xl overflow-hidden" style={{ height: '500px' }}>
+        {/* Map & results */}
+        <div className="lg:col-span-2 space-y-5">
+          <div className="glass-card rounded-2xl overflow-hidden" style={{ height: '480px' }}>
             {route ? (
               <MapView dailyRoutes={route.dailyRoutes} />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50/50">
+              <div className="w-full h-full flex items-center justify-center bg-slate-50/50">
                 <div className="text-center animate-fade-in">
-                  <div className="text-7xl mb-5 animate-float-slow">🗺️</div>
-                  <p className="text-lg font-semibold text-slate-500">המפה תופיע כאן לאחר תכנון מסלול</p>
-                  <p className="text-sm mt-1.5 text-slate-400">מלא את הטופס ולחץ &quot;צור מסלול&quot;</p>
+                  <div className="text-5xl mb-4 opacity-40">🗺️</div>
+                  <p className="text-base font-medium text-slate-400">המפה תופיע כאן לאחר תכנון מסלול</p>
+                  <p className="text-sm mt-1 text-slate-300">מלא את הטופס ולחץ &quot;צור מסלול&quot;</p>
                 </div>
               </div>
             )}
           </div>
 
           {route && (
-            <div className="space-y-5 animate-slide-up">
-              <div className="flex items-center gap-4 flex-wrap">
-                <h2 className="text-2xl font-black text-slate-800">{route.destination}</h2>
-                <span className="text-sm bg-primary-100 text-primary-700 px-3 py-1 rounded-full font-semibold border border-primary-200">
+            <div className="space-y-4 animate-slide-up">
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="text-xl font-bold text-slate-900">{route.destination}</h2>
+                <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-medium border border-slate-200">
                   {route.tripType === 'cycling' ? '🚴 אופניים' : '🥾 טרק'}
                 </span>
-                <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-                  {route.durationDays} ימים | {totalDistance.toFixed(1)} ק&quot;מ סה&quot;כ
+                <span className="text-xs text-slate-400">
+                  {route.durationDays} ימים · {totalDistance.toFixed(1)} ק&quot;מ
                 </span>
               </div>
 
               {imageUrl && (
-                <div className="rounded-2xl overflow-hidden h-48 shadow-xl">
+                <div className="rounded-xl overflow-hidden h-44">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={imageUrl} alt={route.destination} className="w-full h-full object-cover" />
                 </div>
               )}
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {route.dailyRoutes.map((day) => (
-                  <div key={day.day} className="glass-card rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <div className="flex items-center gap-2.5 mb-3">
-                      <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 text-white flex items-center justify-center font-bold text-sm shadow-md">
+                  <div key={day.day} className="glass-card rounded-xl p-4 hover:shadow-md transition-all duration-200">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-xs">
                         {day.day}
                       </span>
-                      <h3 className="font-bold text-slate-800">יום {day.day}</h3>
+                      <h3 className="font-bold text-slate-800 text-sm">יום {day.day}</h3>
                     </div>
-                    <div className="space-y-1.5 text-sm text-slate-600">
-                      <p>
-                        <span className="font-semibold text-slate-700">מ:</span> {day.startLocation}
+                    <div className="space-y-1 text-sm text-slate-600">
+                      <p className="text-xs">
+                        <span className="font-medium text-slate-700">מ:</span> {day.startLocation}
                       </p>
-                      <p>
-                        <span className="font-semibold text-slate-700">עד:</span> {day.endLocation}
+                      <p className="text-xs">
+                        <span className="font-medium text-slate-700">עד:</span> {day.endLocation}
                       </p>
-                      <p className="font-bold text-primary-700 text-base">{day.distance_km} ק&quot;מ</p>
-                      <p className="text-xs text-slate-400 mt-2 leading-relaxed">{day.description}</p>
+                      <p className="font-bold text-primary-600 text-sm mt-1">{day.distance_km} ק&quot;מ</p>
+                      <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">{day.description}</p>
                     </div>
                   </div>
                 ))}

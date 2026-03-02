@@ -2,37 +2,41 @@ import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen relative">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 px-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-600/10 via-transparent to-accent-500/10" />
+    <div className="relative">
+      {/* Hero */}
+      <section className="section-padding relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-accent-500/5" />
 
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="animate-fade-in inline-block mb-6 px-5 py-2 bg-primary-100/80 backdrop-blur-sm text-primary-700 rounded-full text-sm font-semibold border border-primary-200/50">
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="animate-fade-in inline-flex items-center gap-2 mb-8 px-4 py-1.5 bg-white/80 backdrop-blur-sm text-primary-700 rounded-full text-sm font-medium border border-primary-100 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse" />
             פרויקט סיום 2026 - אפקה
           </div>
-          <h1 className="animate-slide-up text-5xl sm:text-7xl font-black text-slate-900 mb-6 leading-tight tracking-tight">
-            מסלול טיולים
-            <span className="text-gradient block mt-2">אפקה 2026</span>
+
+          <h1 className="animate-slide-up text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 mb-6 leading-[1.1] tracking-tight">
+            תכנן את הטיול הבא שלך
+            <span className="text-gradient block mt-1">בעזרת בינה מלאכותית</span>
           </h1>
-          <p className="animate-slide-up stagger-2 text-xl text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-            תכנן מסלולי טיולים חכמים עם בינה מלאכותית, מפות אינטראקטיביות,
-            תחזית מזג אוויר ועוד. בחר יעד, סוג טיול ומשך - והמערכת תיצור עבורך
-            מסלול מותאם אישית.
+
+          <p className="animate-slide-up stagger-2 text-lg sm:text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+            בחר יעד, סוג טיול ומשך — והמערכת תיצור עבורך מסלול מותאם אישית
+            עם מפות אינטראקטיביות ותחזית מזג אוויר.
           </p>
-          <div className="animate-slide-up stagger-3 flex flex-col sm:flex-row gap-4 justify-center">
+
+          <div className="animate-slide-up stagger-3 flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/planning"
-              className="group px-8 py-4 bg-gradient-to-l from-primary-600 to-primary-500 text-white font-bold text-lg rounded-2xl hover:from-primary-700 hover:to-primary-600 transition-all shadow-xl shadow-primary-200/50 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-300/50"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-slate-900 text-white font-semibold text-base rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 hover:-translate-y-0.5 hover:shadow-xl"
             >
-              <span className="inline-block transition-transform group-hover:scale-110 ml-2">🗺️</span>
-              תכנון מסלולים
+              התחל לתכנן
+              <svg className="w-4 h-4 rotate-180 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </Link>
             <Link
               href="/history"
-              className="group px-8 py-4 bg-white/80 backdrop-blur-sm text-slate-700 font-bold text-lg rounded-2xl border-2 border-slate-200 hover:border-primary-300 hover:text-primary-700 transition-all hover:-translate-y-1 hover:shadow-lg"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-slate-700 font-semibold text-base rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
-              <span className="inline-block transition-transform group-hover:scale-110 ml-2">📋</span>
               היסטוריית מסלולים
             </Link>
           </div>
@@ -40,26 +44,27 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="py-20 px-4">
+      <section className="section-padding">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-800 mb-3">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
               מה המערכת מציעה?
             </h2>
-            <p className="text-slate-500 text-lg max-w-xl mx-auto">
+            <p className="text-slate-500 text-base max-w-lg mx-auto">
               כלים חכמים שהופכים את תכנון הטיול לחוויה פשוטה ומהנה
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map((feature, idx) => (
               <div
                 key={idx}
-                className="group glass-card rounded-2xl p-6 hover:shadow-2xl hover:shadow-primary-100/50 transition-all duration-300 hover:-translate-y-2 border border-slate-100 hover:border-primary-200/50"
+                className="group glass-card rounded-2xl p-6 hover:shadow-md hover:border-slate-200 transition-all duration-300"
               >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-50 to-accent-50 flex items-center justify-center text-3xl mb-5 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center text-2xl mb-4 group-hover:scale-105 transition-transform duration-200">
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-bold text-slate-800 mb-2">{feature.title}</h3>
+                <h3 className="text-base font-bold text-slate-800 mb-1.5">{feature.title}</h3>
                 <p className="text-slate-500 leading-relaxed text-sm">{feature.description}</p>
               </div>
             ))}
@@ -68,49 +73,46 @@ export default function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4 bg-gradient-to-b from-white/60 to-transparent">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-800 mb-3">
+      <section className="section-padding bg-white/50">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
               איך זה עובד?
             </h2>
-            <p className="text-slate-500 text-lg">ארבעה צעדים פשוטים למסלול מושלם</p>
+            <p className="text-slate-500 text-base">ארבעה צעדים פשוטים למסלול מושלם</p>
           </div>
-          <div className="relative">
-            <div className="absolute right-[23px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-200 via-primary-300 to-accent-200 hidden sm:block" />
-            <div className="space-y-8">
-              {steps.map((step, idx) => (
-                <div key={idx} className="flex items-start gap-5 group">
-                  <div className="relative flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 text-white flex items-center justify-center font-black text-lg shadow-lg shadow-primary-200/50 group-hover:scale-110 transition-transform duration-300 z-10">
-                    {idx + 1}
-                  </div>
-                  <div className="glass-card rounded-2xl p-5 flex-1 group-hover:shadow-xl group-hover:border-primary-200/50 transition-all duration-300">
-                    <h3 className="text-lg font-bold text-slate-800 mb-1">{step.title}</h3>
-                    <p className="text-slate-500 text-sm">{step.description}</p>
-                  </div>
+
+          <div className="space-y-4">
+            {steps.map((step, idx) => (
+              <div key={idx} className="flex items-start gap-4 group">
+                <div className="relative flex-shrink-0 w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm">
+                  {idx + 1}
                 </div>
-              ))}
-            </div>
+                <div className="glass-card rounded-xl p-4 flex-1 group-hover:shadow-md group-hover:border-slate-200 transition-all duration-200">
+                  <h3 className="text-base font-bold text-slate-800 mb-0.5">{step.title}</h3>
+                  <p className="text-slate-500 text-sm">{step.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="glass-card-strong rounded-3xl p-10 sm:p-14 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-transparent to-accent-50/50" />
+      <section className="section-padding">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="glass-card-strong rounded-2xl p-10 sm:p-14 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-50/40 via-transparent to-accent-50/40" />
             <div className="relative z-10">
-              <div className="text-5xl mb-4">🌍</div>
-              <h2 className="text-3xl font-black text-slate-800 mb-3">
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
                 מוכנים לצאת לדרך?
               </h2>
-              <p className="text-slate-500 mb-8 max-w-md mx-auto">
-                התחילו לתכנן את הטיול הבא שלכם עכשיו - זה חינמי ולוקח פחות מדקה.
+              <p className="text-slate-500 mb-8 max-w-md mx-auto text-base">
+                התחילו לתכנן את הטיול הבא שלכם עכשיו — זה חינמי ולוקח פחות מדקה.
               </p>
               <Link
                 href="/planning"
-                className="inline-block px-10 py-4 bg-gradient-to-l from-primary-600 to-primary-500 text-white font-bold text-lg rounded-2xl hover:from-primary-700 hover:to-primary-600 transition-all shadow-xl shadow-primary-200/50 hover:-translate-y-1 hover:shadow-2xl"
+                className="inline-flex items-center gap-2 px-8 py-3.5 bg-slate-900 text-white font-semibold rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 hover:-translate-y-0.5 hover:shadow-xl"
               >
                 התחל עכשיו
               </Link>
