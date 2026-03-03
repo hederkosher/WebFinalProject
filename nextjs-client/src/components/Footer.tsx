@@ -1,4 +1,24 @@
+'use client';
+
 import Link from 'next/link';
+import LogoLoop from './LogoLoop';
+import { SiNextdotjs, SiExpress, SiMongodb, SiReact, SiTailwindcss, SiTypescript } from 'react-icons/si';
+
+const GroqIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em">
+    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 3.5a6.5 6.5 0 1 1 0 13 6.5 6.5 0 0 1 0-13Zm0 2.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 1.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" />
+  </svg>
+);
+
+const techLogos = [
+  { node: <SiNextdotjs />, title: 'Next.js', href: 'https://nextjs.org' },
+  { node: <SiExpress />, title: 'Express', href: 'https://expressjs.com' },
+  { node: <SiMongodb />, title: 'MongoDB', href: 'https://www.mongodb.com' },
+  { node: <GroqIcon />, title: 'Groq AI', href: 'https://groq.com' },
+  { node: <SiReact />, title: 'React', href: 'https://react.dev' },
+  { node: <SiTypescript />, title: 'TypeScript', href: 'https://www.typescriptlang.org' },
+  { node: <SiTailwindcss />, title: 'Tailwind CSS', href: 'https://tailwindcss.com' },
+];
 
 export default function Footer() {
   return (
@@ -53,12 +73,30 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p className="text-slate-500 text-xs">
-            © 2026 מסלול טיולים אפקה. כל הזכויות שמורות.
+        {/* Tech Stack Logo Loop */}
+        <div className="mt-10 pt-6 border-t border-slate-800">
+          <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest text-center mb-4">
+            נבנה עם
           </p>
+          <div className="h-8 text-slate-500">
+            <LogoLoop
+              logos={techLogos}
+              speed={40}
+              direction="left"
+              logoHeight={18}
+              gap={48}
+              hoverSpeed={0}
+              scaleOnHover
+              fadeOut
+              fadeOutColor="#0f172a"
+              ariaLabel="Tech stack"
+            />
+          </div>
+        </div>
+
+        <div className="mt-6 text-center">
           <p className="text-slate-600 text-xs">
-            Next.js · Express · MongoDB · Groq AI
+            © 2026 מסלול טיולים אפקה. כל הזכויות שמורות.
           </p>
         </div>
       </div>
