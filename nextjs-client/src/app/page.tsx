@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import RotatingText from '@/components/RotatingText';
 
 export default function HomePage() {
   return (
@@ -15,7 +18,21 @@ export default function HomePage() {
 
           <h1 className="animate-slide-up text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 mb-6 leading-[1.1] tracking-tight">
             תכנן את הטיול הבא שלך
-            <span className="text-gradient block mt-1">בעזרת בינה מלאכותית</span>
+            <span className="flex items-center justify-center gap-2 sm:gap-3 mt-1">
+              <span className="text-gradient">עם</span>
+              <RotatingText
+                texts={['מסלולי אופניים', 'מסלולי טרק', 'מפות חכמות', 'תחזית מזג אוויר', 'בינה מלאכותית']}
+                mainClassName="px-3 sm:px-4 bg-slate-900 text-white overflow-hidden py-1 sm:py-1.5 justify-center rounded-xl"
+                staggerFrom="first"
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '-120%' }}
+                staggerDuration={0.025}
+                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1"
+                transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+                rotationInterval={2500}
+              />
+            </span>
           </h1>
 
           <p className="animate-slide-up stagger-2 text-lg sm:text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
