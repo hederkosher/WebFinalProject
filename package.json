@@ -11,7 +11,7 @@
     "start:express": "cd express-server && npm start",
     "start:next": "cd nextjs-client && npm start",
     "start": "concurrently --names \"EXPRESS,NEXTJS\" \"npm run start:express\" \"npm run start:next\"",
-    "build": "cd nextjs-client && npm run build",
+    "build": "cd nextjs-client && npm install && npm run build",
     "setup": "node setup.js"
   },
   "devDependencies": {
