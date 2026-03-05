@@ -104,7 +104,17 @@ export default function PlanningPage() {
   const totalDistance = route?.dailyRoutes?.reduce((sum, r) => sum + r.distance_km, 0) || 0;
 
   return (
-    <div className="page-container py-6">
+    <div className="page-container py-8">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center text-base">
+          🗺️
+        </div>
+        <div>
+          <h1 className="text-xl font-bold text-slate-900">תכנון מסלול</h1>
+          <p className="text-xs text-slate-400">בחר יעד וסוג טיול לקבלת מסלול מותאם אישית</p>
+        </div>
+      </div>
+
       <div className="grid lg:grid-cols-3 gap-5">
         {/* Form sidebar */}
         <div className="lg:col-span-1 space-y-4">
@@ -120,32 +130,35 @@ export default function PlanningPage() {
           )}
 
           {route && !saved && (
-            <div className="glass-card-strong rounded-2xl p-4 space-y-3 animate-scale-in">
-              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-accent-100 text-accent-700 flex items-center justify-center text-xs">✓</span>
-                אשר את המסלול
-              </h3>
-              <p className="text-xs text-slate-500">
-                לאחר אישור, המסלול יישמר ויהיה זמין בהיסטוריה.
-              </p>
-              <div className="flex gap-2">
-                <button
-                  onClick={handleApprove}
-                  disabled={isSaving}
-                  className="flex-1 py-2 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-700 transition-all disabled:opacity-50 text-sm"
-                >
-                  {isSaving ? 'שומר...' : 'אשר ושמור'}
-                </button>
-                <button
-                  onClick={() => {
-                    setRoute(null);
-                    setWeather(null);
-                    setImageUrl('');
-                  }}
-                  className="py-2 px-4 bg-slate-100 text-slate-600 font-medium rounded-lg hover:bg-slate-200 transition-all text-sm"
-                >
-                  בטל
-                </button>
+            <div className="relative glass-card-strong rounded-2xl p-4 space-y-3 animate-scale-in overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-50/50 via-transparent to-transparent pointer-events-none" />
+              <div className="relative">
+                <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-accent-500 text-white flex items-center justify-center text-xs">✓</span>
+                  אשר את המסלול
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  לאחר אישור, המסלול יישמר ויהיה זמין בהיסטוריה.
+                </p>
+                <div className="flex gap-2 mt-3">
+                  <button
+                    onClick={handleApprove}
+                    disabled={isSaving}
+                    className="flex-1 py-2.5 bg-accent-600 text-white font-semibold rounded-xl hover:bg-accent-700 transition-all disabled:opacity-50 text-sm shadow-md shadow-accent-600/20"
+                  >
+                    {isSaving ? 'שומר...' : 'אשר ושמור'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setRoute(null);
+                      setWeather(null);
+                      setImageUrl('');
+                    }}
+                    className="py-2.5 px-4 bg-slate-100 text-slate-600 font-medium rounded-xl hover:bg-slate-200 transition-all text-sm"
+                  >
+                    בטל
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -167,12 +180,27 @@ export default function PlanningPage() {
           <div className="glass-card rounded-2xl overflow-hidden" style={{ height: '480px' }}>
             {route ? (
               <MapView dailyRoutes={route.dailyRoutes} />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-slate-50/50">
+            ) : isLoading ? (
+              <div className="w-full h-full flex items-center justify-center bg-slate-50/80">
                 <div className="text-center animate-fade-in">
-                  <div className="text-5xl mb-4 opacity-40">🗺️</div>
-                  <p className="text-base font-medium text-slate-400">המפה תופיע כאן לאחר תכנון מסלול</p>
-                  <p className="text-sm mt-1 text-slate-300">מלא את הטופס ולחץ &quot;צור מסלול&quot;</p>
+                  <div className="relative w-14 h-14 mx-auto mb-5">
+                    <div className="absolute inset-0 border-4 border-slate-200 rounded-full" />
+                    <div className="absolute inset-0 border-4 border-primary-500 border-t-transparent rounded-full animate-spin" />
+                    <div className="absolute inset-2 flex items-center justify-center text-xl">🗺️</div>
+                  </div>
+                  <p className="text-base font-semibold text-slate-600">יוצר את המסלול שלך...</p>
+                  <p className="text-sm mt-1 text-slate-400">זה יכול לקחת כמה שניות</p>
+                </div>
+              </div>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100/50 relative overflow-hidden">
+                <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'radial-gradient(circle at 1px 1px, #334155 1px, transparent 0)', backgroundSize: '32px 32px'}} />
+                <div className="text-center animate-fade-in relative z-10">
+                  <div className="w-20 h-20 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-4xl mx-auto mb-4">
+                    🗺️
+                  </div>
+                  <p className="text-base font-semibold text-slate-500">המפה תופיע כאן</p>
+                  <p className="text-sm mt-1 text-slate-400">מלא את הטופס ולחץ &quot;צור מסלול&quot;</p>
                 </div>
               </div>
             )}
@@ -180,41 +208,45 @@ export default function PlanningPage() {
 
           {route && (
             <div className="space-y-4 animate-slide-up">
-              <div className="flex items-center gap-3 flex-wrap">
-                <h2 className="text-xl font-bold text-slate-900">{route.destination}</h2>
-                <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-medium border border-slate-200">
-                  {route.tripType === 'cycling' ? '🚴 אופניים' : '🥾 טרק'}
-                </span>
-                <span className="text-xs text-slate-400">
-                  {route.durationDays} ימים · {totalDistance.toFixed(1)} ק&quot;מ
-                </span>
-              </div>
-
-              {imageUrl && (
-                <div className="rounded-xl overflow-hidden h-44">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={imageUrl} alt={route.destination} className="w-full h-full object-cover" />
+              <div className="glass-card rounded-2xl p-4">
+                <div className="flex items-start gap-3 flex-wrap">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-xl font-bold text-slate-900 truncate">{route.destination}</h2>
+                    <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                      <span className="badge-slate">
+                        {route.tripType === 'cycling' ? '🚴 אופניים' : '🥾 טרק'}
+                      </span>
+                      <span className="badge-blue">
+                        {route.durationDays} ימים
+                      </span>
+                      <span className="badge-green">
+                        {totalDistance.toFixed(1)} ק&quot;מ סה&quot;כ
+                      </span>
+                    </div>
+                  </div>
+                  {imageUrl && (
+                    <div className="w-20 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={imageUrl} alt={route.destination} className="w-full h-full object-cover" />
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {route.dailyRoutes.map((day) => (
-                  <div key={day.day} className="glass-card rounded-xl p-4 hover:shadow-md transition-all duration-200">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-xs">
+                  <div key={day.day} className="glass-card rounded-xl p-4 hover:shadow-md hover:border-primary-100 transition-all duration-200 group">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-xs group-hover:bg-primary-600 transition-colors">
                         {day.day}
                       </span>
                       <h3 className="font-bold text-slate-800 text-sm">יום {day.day}</h3>
+                      <span className="mr-auto font-bold text-primary-600 text-sm">{day.distance_km} ק&quot;מ</span>
                     </div>
-                    <div className="space-y-1 text-sm text-slate-600">
-                      <p className="text-xs">
-                        <span className="font-medium text-slate-700">מ:</span> {day.startLocation}
-                      </p>
-                      <p className="text-xs">
-                        <span className="font-medium text-slate-700">עד:</span> {day.endLocation}
-                      </p>
-                      <p className="font-bold text-primary-600 text-sm mt-1">{day.distance_km} ק&quot;מ</p>
-                      <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">{day.description}</p>
+                    <div className="space-y-1 text-xs text-slate-500 border-t border-slate-100 pt-2.5">
+                      <p><span className="font-medium text-slate-600">מ:</span> {day.startLocation}</p>
+                      <p><span className="font-medium text-slate-600">עד:</span> {day.endLocation}</p>
+                      <p className="text-slate-400 mt-1.5 leading-relaxed">{day.description}</p>
                     </div>
                   </div>
                 ))}

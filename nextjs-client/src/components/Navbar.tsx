@@ -58,33 +58,36 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/90 backdrop-blur-lg border-b border-slate-200/60 shadow-sm'
-          : 'bg-white/50 backdrop-blur-sm border-b border-transparent'
+          ? 'bg-white/92 backdrop-blur-xl border-b border-slate-200/70 shadow-sm'
+          : 'bg-white/60 backdrop-blur-md border-b border-transparent'
       }`}
     >
       <div className="page-container">
         <div className="flex justify-between items-center h-14">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center group-hover:scale-105 group-hover:bg-slate-800 transition-all duration-150 shadow-sm">
               <span className="text-sm">🥾</span>
             </div>
-            <span className="text-sm font-bold text-slate-900">מסלול טיולים</span>
+            <span className="text-sm font-bold text-slate-900 group-hover:text-primary-700 transition-colors duration-150">מסלול טיולים</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-0.5">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
+                className={`relative px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                   pathname === link.href
-                    ? 'bg-slate-900 text-white'
+                    ? 'bg-slate-900 text-white shadow-sm'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 {link.label}
+                {pathname === link.href && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-1 h-1 rounded-full bg-accent-500 hidden" />
+                )}
               </Link>
             ))}
           </div>

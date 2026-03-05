@@ -98,24 +98,28 @@ export default function HistoryPage() {
       </div>
 
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-24 gap-3">
-          <div className="w-7 h-7 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin" />
-          <p className="text-slate-400 text-sm">טוען מסלולים...</p>
+        <div className="flex flex-col items-center justify-center py-32 gap-4 animate-fade-in">
+          <div className="relative w-14 h-14">
+            <div className="absolute inset-0 border-4 border-slate-200 rounded-full" />
+            <div className="absolute inset-0 border-4 border-slate-600 border-t-transparent rounded-full animate-spin" />
+            <div className="absolute inset-2 flex items-center justify-center text-xl">📋</div>
+          </div>
+          <p className="text-slate-500 text-sm font-medium">טוען מסלולים...</p>
         </div>
       ) : routes.length === 0 ? (
-        <div className="text-center py-24 animate-fade-in">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-100 mb-5">
-            <span className="text-3xl opacity-60">📭</span>
+        <div className="text-center py-28 animate-fade-in">
+          <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-slate-100 to-slate-50 border border-slate-200 mb-6 shadow-sm">
+            <span className="text-4xl">🗺️</span>
           </div>
-          <h2 className="text-lg font-bold text-slate-800 mb-1.5">אין מסלולים שמורים</h2>
-          <p className="text-slate-500 text-sm mb-6 max-w-xs mx-auto">
-            עבור לדף תכנון מסלולים כדי ליצור ולשמור מסלול חדש.
+          <h2 className="text-xl font-bold text-slate-800 mb-2">אין מסלולים שמורים</h2>
+          <p className="text-slate-500 text-sm mb-8 max-w-xs mx-auto leading-relaxed">
+            עבור לדף תכנון מסלולים כדי ליצור ולשמור את המסלול הראשון שלך.
           </p>
-          <Link
-            href="/planning"
-            className="inline-flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white font-semibold text-sm rounded-lg hover:bg-slate-800 transition-all"
-          >
+          <Link href="/planning" className="btn-primary">
             תכנון מסלולים
+            <svg className="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </Link>
         </div>
       ) : (
@@ -154,45 +158,52 @@ export default function HistoryPage() {
                   <MapView dailyRoutes={selectedRoute.dailyRoutes} />
                 </div>
 
-                <div className="flex items-center gap-3 flex-wrap mt-5">
-                  <h2 className="text-xl font-bold text-slate-900">
-                    {selectedRoute.destination}
-                  </h2>
-                  <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-medium border border-slate-200">
-                    {selectedRoute.tripType === 'cycling' ? '🚴 אופניים' : '🥾 טרק'}
-                  </span>
-                  <span className="text-xs text-slate-400">
-                    {selectedRoute.durationDays} ימים · {totalDistance.toFixed(1)} ק&quot;מ
-                  </span>
-                </div>
-
-                {selectedRoute.imageUrl && (
-                  <div className="rounded-xl overflow-hidden h-36 mt-4">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={selectedRoute.imageUrl}
-                      alt={selectedRoute.destination}
-                      className="w-full h-full object-cover"
-                    />
+                <div className="glass-card rounded-2xl p-4 mt-5">
+                  <div className="flex items-start gap-3 flex-wrap">
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-xl font-bold text-slate-900 truncate">
+                        {selectedRoute.destination}
+                      </h2>
+                      <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                        <span className="badge-slate">
+                          {selectedRoute.tripType === 'cycling' ? '🚴 אופניים' : '🥾 טרק'}
+                        </span>
+                        <span className="badge-blue">
+                          {selectedRoute.durationDays} ימים
+                        </span>
+                        <span className="badge-green">
+                          {totalDistance.toFixed(1)} ק&quot;מ סה&quot;כ
+                        </span>
+                      </div>
+                    </div>
+                    {selectedRoute.imageUrl && (
+                      <div className="w-20 h-16 rounded-xl overflow-hidden flex-shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={selectedRoute.imageUrl}
+                          alt={selectedRoute.destination}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
                   {selectedRoute.dailyRoutes.map((day) => (
-                    <div key={day.day} className="glass-card rounded-xl p-4 hover:shadow-md transition-all duration-200">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-xs">
+                    <div key={day.day} className="glass-card rounded-xl p-4 hover:shadow-md hover:border-primary-100 transition-all duration-200 group">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-xs group-hover:bg-primary-600 transition-colors">
                           {day.day}
                         </span>
                         <h3 className="font-bold text-slate-800 text-sm">יום {day.day}</h3>
+                        <span className="mr-auto font-bold text-primary-600 text-sm">{day.distance_km} ק&quot;מ</span>
                       </div>
-                      <p className="text-xs text-slate-600">
-                        {day.startLocation} → {day.endLocation}
-                      </p>
-                      <p className="text-sm font-bold text-primary-600 mt-1">
-                        {day.distance_km} ק&quot;מ
-                      </p>
-                      <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">{day.description}</p>
+                      <div className="space-y-1 text-xs text-slate-500 border-t border-slate-100 pt-2.5">
+                        <p><span className="font-medium text-slate-600">מ:</span> {day.startLocation}</p>
+                        <p><span className="font-medium text-slate-600">עד:</span> {day.endLocation}</p>
+                        <p className="text-slate-400 mt-1.5 leading-relaxed">{day.description}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -209,14 +220,19 @@ export default function HistoryPage() {
                 </div>
               </div>
             ) : (
-              <div className="glass-card rounded-2xl p-14 text-center animate-fade-in">
-                <div className="text-4xl mb-4 opacity-30">👈</div>
-                <p className="text-base font-medium text-slate-400">
-                  בחר מסלול מהרשימה כדי לצפות בפרטים
-                </p>
-                <p className="text-sm text-slate-300 mt-1">
-                  כל המסלולים שאישרת מופיעים ברשימה משמאל
-                </p>
+              <div className="glass-card rounded-2xl p-14 text-center animate-fade-in relative overflow-hidden">
+                <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'radial-gradient(circle at 1px 1px, #334155 1px, transparent 0)', backgroundSize: '28px 28px'}} />
+                <div className="relative z-10">
+                  <div className="w-16 h-16 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-3xl mx-auto mb-4">
+                    🗺️
+                  </div>
+                  <p className="text-base font-semibold text-slate-500">
+                    בחר מסלול לצפייה
+                  </p>
+                  <p className="text-sm text-slate-400 mt-1.5 max-w-xs mx-auto leading-relaxed">
+                    לחץ על אחד מהמסלולים ברשימה כדי לצפות בו על המפה
+                  </p>
+                </div>
               </div>
             )}
           </div>
