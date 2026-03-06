@@ -27,10 +27,11 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-slate-50 font-hebrew text-slate-900">
+      <body className="min-h-screen flex flex-col font-hebrew" style={{ background: 'var(--bg-base)', color: 'var(--text-primary)' }}>
         <TokenRefresher />
         <LightPillarBackground />
-        <div className="fixed inset-0 pointer-events-none z-[1] bg-gradient-to-b from-white/60 via-transparent to-slate-50/40" />
+        <div className="fixed inset-0 pointer-events-none z-[1]"
+          style={{ background: 'linear-gradient(to bottom, rgba(11,21,18,0.5) 0%, transparent 30%, rgba(11,21,18,0.3) 100%)' }} />
         <Navbar />
         <main className="relative z-10 pt-16 flex-1">{children}</main>
         <Footer />
