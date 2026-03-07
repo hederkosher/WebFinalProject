@@ -27,7 +27,7 @@
 - **תכנון מסלולי טרק**: 1-3 מסלולים מעגליים, 5-10 ק"מ כל אחד
 - **מסלולים ריאליסטיים**: שימוש ב-OpenRouteService למסלולים על כבישים/שבילים אמיתיים
 - **תחזית מזג אוויר**: 3 ימים הקרובים באזור המסלול (WeatherAPI.com)
-- **תמונות**: תמונה מאפיינת של המדינה (DALL-E / Unsplash)
+- **תמונות**: תמונה מאפיינת של המדינה (Unsplash API / Picsum fallback)
 - **שמירה והיסטוריה**: אישור ושמירת מסלולים בבסיס נתונים MongoDB
 
 ## טכנולוגיות
@@ -56,7 +56,7 @@
 ### 1. שכפול הפרויקט
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/hederkosher/WebFinalProject.git
 cd WebFinalProject
 ```
 
