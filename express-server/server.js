@@ -23,6 +23,10 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', server: 'express-auth' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Express auth server running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Express auth server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;

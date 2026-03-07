@@ -126,7 +126,7 @@ export default function HomePage() {
       <section className="section-padding">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <div className="badge-green mb-4 mx-auto w-fit">יכולות המערכת</div>
+            <div className="mb-4 mx-auto" style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 12px', borderRadius:'9999px', fontSize:'0.75rem', fontWeight:600, background:'rgba(74,222,128,0.14)', color:'#4ade80', border:'1px solid rgba(74,222,128,0.30)' }}>יכולות המערכת</div>
             <h2 className="text-3xl sm:text-4xl font-black mb-3" style={{ color: 'var(--text-primary)' }}>
               מה המערכת מציעה?
             </h2>
@@ -177,7 +177,7 @@ export default function HomePage() {
       <section className="section-padding">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-14">
-            <div className="badge-blue mb-4 mx-auto w-fit">תהליך פשוט</div>
+            <div className="mb-4 mx-auto" style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 12px', borderRadius:'9999px', fontSize:'0.75rem', fontWeight:600, background:'rgba(96,165,250,0.14)', color:'#93c5fd', border:'1px solid rgba(96,165,250,0.30)' }}>תהליך פשוט</div>
             <h2 className="text-3xl sm:text-4xl font-black mb-3" style={{ color: 'var(--text-primary)' }}>
               איך זה עובד?
             </h2>
@@ -263,8 +263,8 @@ export default function HomePage() {
             <div className="absolute inset-0 dot-pattern opacity-40 pointer-events-none" />
 
             <div className="relative z-10">
-              <div className="badge-green mb-6 mx-auto w-fit">
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse-dot" style={{ background: 'var(--trail)' }} />
+              <div className="mb-6 mx-auto" style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 12px', borderRadius:'9999px', fontSize:'0.75rem', fontWeight:600, background:'rgba(74,222,128,0.14)', color:'#4ade80', border:'1px solid rgba(74,222,128,0.30)' }}>
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse-dot" style={{ background: '#4ade80' }} />
                 חינמי לחלוטין
               </div>
               <h2 className="text-3xl sm:text-4xl font-black mb-3" style={{ color: 'var(--text-primary)' }}>
