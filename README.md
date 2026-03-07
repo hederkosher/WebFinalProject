@@ -174,6 +174,13 @@ WebFinalProject/
 4. **אשר ושמור** - אשר את המסלול כדי לשמור אותו בבסיס הנתונים
 5. **היסטוריה** - צפה במסלולים שנשמרו בעבר עם תחזית מזג אוויר עדכנית
 
+## פריסה בענן / Cloud Deployment
+
+| שירות | URL |
+|-------|-----|
+| Next.js (אפליקציה ראשית) | https://nextjs-client-lake.vercel.app |
+| Express (שרת הזדהות) | https://express-server-beta-livid.vercel.app |
+
 ## Known Bugs / בעיות ידועות
 
 - Unsplash Source API הוצא משימוש - במקרה של כשל ב-DALL-E, תמונה עלולה לא להופיע

@@ -3,7 +3,7 @@
 import { useEffect, useCallback } from 'react';
 import Cookies from 'js-cookie';
 
-const REFRESH_INTERVAL = 60 * 60 * 1000; // 1 hour
+const REFRESH_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours (once a day)
 const EXPIRY_THRESHOLD = 2 * 60 * 60; // 2 hours in seconds
 
 function parseJwt(token: string) {
