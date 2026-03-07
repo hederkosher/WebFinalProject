@@ -34,14 +34,12 @@ function LoginForm() {
     setError('');
     setLoading(true);
     try {
-      const expressUrl = process.env.NEXT_PUBLIC_EXPRESS_URL || 'http://localhost:4000';
       const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
       const body: Record<string, string> = { email, password };
       if (isRegister) { body.fullName = fullName; body.partnerName = partnerName; }
-      const res = await fetch(`${expressUrl}${endpoint}`, {
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify(body),
       });
       const data = await res.json();

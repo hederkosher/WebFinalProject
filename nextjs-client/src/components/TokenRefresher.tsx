@@ -30,10 +30,8 @@ export default function TokenRefresher() {
     if (timeLeft > EXPIRY_THRESHOLD) return;
 
     try {
-      const expressUrl = process.env.NEXT_PUBLIC_EXPRESS_URL || 'http://localhost:4000';
-      const res = await fetch(`${expressUrl}/api/auth/refresh`, {
+      const res = await fetch('/api/auth/refresh', {
         method: 'POST',
-        credentials: 'include',
       });
 
       if (res.ok) {

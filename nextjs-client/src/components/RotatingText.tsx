@@ -39,7 +39,7 @@ export interface RotatingTextRef {
 
 const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>((props, ref) => {
   const {
-    texts,
+    texts: textsAny,
     transition = { type: 'spring', damping: 25, stiffness: 300 },
     initial = { y: '100%', opacity: 0 },
     animate = { y: 0, opacity: 1 },
@@ -57,7 +57,9 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>((props, ref)
     splitLevelClassName,
     elementLevelClassName,
     ...rest
-  } = props;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } = props as any;
+  const texts: string[] = textsAny;
 
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
@@ -69,7 +71,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>((props, ref)
     return Array.from(text);
   };
 
-  const elements = useMemo(() => {
+  const elements = useMemo((): Array<{ characters: string[]; needsSpace: boolean }> => {
     const currentText = texts[currentTextIndex];
     if (splitBy === 'characters') {
       const words = currentText.split(' ');
