@@ -45,7 +45,7 @@ export default function HomePage() {
             </div>
 
             {/* Headline */}
-            <h1 className="animate-slide-up text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6"
+            <h1 className="animate-slide-up text-5xl sm:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-4"
               style={{ color: 'var(--text-primary)' }}>
               תכנן את
               <br />
@@ -53,6 +53,12 @@ export default function HomePage() {
               <br />
               שלך
             </h1>
+
+            {/* App title */}
+            <p className="animate-slide-up text-base sm:text-lg font-mono uppercase tracking-widest mb-6"
+              style={{ color: 'var(--text-secondary)' }}>
+              מסלול טיולים אפקה 2026
+            </p>
 
             {/* Rotating text row */}
             <div className="animate-slide-up stagger-2 flex items-center justify-center gap-3 mb-6">
