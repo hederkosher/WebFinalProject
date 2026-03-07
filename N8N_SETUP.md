@@ -60,7 +60,6 @@ This guide sets up n8n to send an email to users when they save a route. **No ch
 2. Search for **MongoDB** and create a new credential.
 3. **Connection string:** use your app’s MongoDB URI with database **test**:
    - **Your setup:** `mongodb://localhost:27017/test`
-   - Atlas (if you switch later): `mongodb+srv://USER:PASSWORD@cluster0.xxxxx.mongodb.net/test`
 4. Save the credential (e.g. name: `Travel Routes DB`).
 
 ---
