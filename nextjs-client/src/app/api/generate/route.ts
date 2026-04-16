@@ -171,7 +171,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json(routeData);
   } catch (error) {
-    console.error('Generate route error:', error);
-    return NextResponse.json({ message: 'שגיאה ביצירת המסלול' }, { status: 500 });
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error('Generate route error:', msg);
+    return NextResponse.json({ message: 'שגיאה ביצירת המסלול', debug: msg }, { status: 500 });
   }
 }
