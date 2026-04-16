@@ -1,11 +1,28 @@
 import { NextResponse } from 'next/server';
-import Groq from 'groq-sdk';
 import { verifyAuth } from '@/lib/auth';
 
 export const maxDuration = 60; // extend Vercel function timeout to 60s
 
-function getGroq() {
-  return new Groq({ apiKey: process.env.GROQ_API_KEY });
+async function callGroq(prompt: string): Promise<string> {
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.7,
+      max_tokens: 3000,
+    }),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Groq API error ${res.status}: ${err}`);
+  }
+  const data = await res.json();
+  return data.choices[0]?.message?.content?.trim() ?? '';
 }
 
 function buildCyclingPrompt(destination: string, days: number): string {
@@ -134,14 +151,7 @@ export async function POST(request: Request) {
         ? buildCyclingPrompt(destination, durationDays)
         : buildTrekkingPrompt(destination, durationDays);
 
-    const completion = await getGroq().chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-      max_tokens: 3000,
-    });
-
-    const content = completion.choices[0]?.message?.content?.trim();
+    const content = await callGroq(prompt);
     if (!content) {
       return NextResponse.json({ message: 'לא התקבלה תשובה מהמודל' }, { status: 500 });
     }
@@ -171,8 +181,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(routeData);
   } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error);
-    console.error('Generate route error:', msg);
-    return NextResponse.json({ message: 'שגיאה ביצירת המסלול', debug: msg }, { status: 500 });
+    console.error('Generate route error:', error);
+    return NextResponse.json({ message: 'שגיאה ביצירת המסלול' }, { status: 500 });
   }
 }
