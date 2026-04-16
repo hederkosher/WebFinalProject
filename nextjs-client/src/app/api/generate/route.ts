@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
 import { verifyAuth } from '@/lib/auth';
 
+export const maxDuration = 60; // extend Vercel function timeout to 60s
+
 function getGroq() {
   return new Groq({ apiKey: process.env.GROQ_API_KEY });
 }
