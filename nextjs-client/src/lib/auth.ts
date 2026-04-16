@@ -1,5 +1,5 @@
 import { jwtVerify } from 'jose';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export async function verifyAuth(): Promise<{
   userId: string;
@@ -7,8 +7,13 @@ export async function verifyAuth(): Promise<{
   partnerName: string;
 } | null> {
   const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+  const headerStore = await headers();
 
+  const cookieToken = cookieStore.get('token')?.value;
+  const authHeader = headerStore.get('authorization') || headerStore.get('Authorization');
+  const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+
+  const token = cookieToken || bearerToken;
   if (!token) return null;
 
   try {
